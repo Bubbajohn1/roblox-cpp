@@ -1,0 +1,7 @@
+
+{
+    "options": {
+        "outDir": "./out",
+        "srcDir": "./src"
+    }
+}

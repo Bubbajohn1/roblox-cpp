@@ -1,6 +1,6 @@
 exe_name = rblxcpp
-compiler = gcc
+compiler = g++
 src_files = $(wildcard ./src/**.*.cpp ./src/*.cpp)
 
 all:
-	$(compiler) $(src_files) -o ./build/$(exe_name).exe
+	$(compiler) -std=c++11 $(src_files) -o ./build/$(exe_name).exe

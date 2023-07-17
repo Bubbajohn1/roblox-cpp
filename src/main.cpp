@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "include/handle.hpp"
 
 int cmpStrings(char* a[], const char* b, const char* c) {
     if(strcmp(a[1], b) == 0 || strcmp(a[1], c) == 0) {
@@ -12,18 +13,18 @@ int cmpStrings(char* a[], const char* b, const char* c) {
 int main(int argc, char* argv[]) {
     if (argc >= 2) {
         if(cmpStrings(argv, "-w", "-watch") == 0) {
-            printf("WATCH");
+            CommandHandler::watch();
         }
 
         if(cmpStrings(argv, "-b", "-build") == 0) {
-            printf("BUILD");
+            CommandHandler::build();
         }
         
         if(cmpStrings(argv, "--init", "--initalize") == 0) {
-            printf("INIT");
+            CommandHandler::init();
         }
     } else {
-        printf("Usage: rblxcpp.exe \n --init / --initalize \n -w / -watch \n -b / -build");
+        printf("Usage: rblxcpp.exe -command \n --init / --initalize \n -w / -watch \n -b / -build");
     }
     return 0;
 }
