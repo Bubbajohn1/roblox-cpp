@@ -40,7 +40,7 @@ or
 ./rblxcpp.exe -watch
 ```
 
-## Coverting to roblox
+## Converting
 
 ### Install [Rojo.](https://rojo.space/docs/v7/getting-started/installation/) after initializing run:
 ```
