@@ -32,7 +32,7 @@ const char* default_config = R"(
 		"ReplicatedStorage": {
 			"$className": "ReplicatedStorage",
 			"cpp_include": {
-				"$path": "out/runtimes"
+				"$path": "runtimes/"
 			},
 			"cpp": {
 				"$path": "out/shared"
@@ -88,8 +88,9 @@ void CommandHandler::init() {
 	create_file("default.project.json", default_config);
 
     // create the basic dirs. these cant be changed or removed.
+	mkdir("runtimes");
+
     mkdir("out");
-    mkdir("out/runtimes");
     mkdir("out/client");
     mkdir("out/server");
     mkdir("out/shared");
@@ -101,7 +102,7 @@ void CommandHandler::init() {
 
     // CREATE RUNTIME FILES
 
-	create_file("./out/runtimes/runtime.server.lua", lua_runtime);
+	create_file("./runtimes/runtime.server.lua", lua_runtime);
 }
 
 std::string convertPath(const ghc::filesystem::path& input) {
@@ -129,12 +130,23 @@ void CommandHandler::build() {
         if (fs::is_directory(entry)) {
             // If it's a directory, you can perform some action or simply skip it.
             // For this example, I'll print the directory path.
-            // std::cout << "Directory: " << std::string::t << std::endl;
 			std::string outputPath = convertPath(entry.path());
             ghc::filesystem::create_directories(outputPath);
         } else if (fs::is_regular_file(entry)) {
             // Process regular files here (e.g., print the file path)
-            std::cout << "File: " << entry.path() << std::endl;
+            
+        }
+        // You can also check for other file types using is_symlink(), is_socket(), etc.
+    }
+
+	for (const auto& entry : fs::recursive_directory_iterator("./src/")) {
+        if (fs::is_directory(entry)) {
+            // If it's a directory, you can perform some action or simply skip it.
+            // For this example, I'll print the directory path.
+            std::cout << "[+] Folder: " << entry.path() << std::endl;
+        } else if (fs::is_regular_file(entry)) {
+            // Process regular files here (e.g., print the file path)
+            std::cout << "[+] File: " << entry.path() << std::endl;
         }
         // You can also check for other file types using is_symlink(), is_socket(), etc.
     }
