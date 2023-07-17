@@ -11,45 +11,99 @@
 
 const char* default_config = R"(
 {
-    "options": {
-        "outDir": "./out",
-        "srcDir": "./src"
-    }
+	"name": "roblox-cpp-game",
+	"globIgnorePaths": [
+		"**/package.json",
+		"**/tsconfig.json"
+	],
+	"tree": {
+		"$className": "DataModel",
+		"ServerScriptService": {
+			"$className": "ServerScriptService",
+			"cpp": {
+				"$path": "out/server"
+			}
+		},
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"cpp_include": {
+				"$path": "out/runtimes"
+			},
+			"cpp": {
+				"$path": "out/shared"
+			}
+		},
+		"StarterPlayer": {
+			"$className": "StarterPlayer",
+			"StarterPlayerScripts": {
+				"$className": "StarterPlayerScripts",
+				"cpp": {
+					"$path": "out/client"
+				}
+			}
+		},
+		"Workspace": {
+			"$className": "Workspace",
+			"$properties": {
+				"FilteringEnabled": true
+			}
+		},
+		"HttpService": {
+			"$className": "HttpService",
+			"$properties": {
+				"HttpEnabled": true
+			}
+		},
+		"SoundService": {
+			"$className": "SoundService",
+			"$properties": {
+				"RespectFilteringEnabled": true
+			}
+		}
+	}
 }
+
+)";
+
+const char* lua_runtime = R"(
+
 )";
 
 void CommandHandler::init() {
-    // create a config file that holds all of the build options for rblxcpp
+    // creates the rojo project file and fodlers that are needed.
 
-    // create and enter the config file
-    std::ofstream config("rblxcpp.config.json");
+    // create and enter the rojo project file
+    std::ofstream config("default.project.json");
     // Write to the file
     config << default_config;
     // Close the file
     config.close();
 
-    // create the basic dirs. these can be changed or removed.
+    // create the basic dirs. these cant be changed or removed.
     mkdir("out");
     mkdir("out/runtimes");
-    mkdir("src");
+    mkdir("out/client");
+    mkdir("out/server");
+    mkdir("out/shared");
 
-    std::string runtimeText;
-    std::ifstream runtimefile_lua1("../lua_runtimes/runtime.lua");
+    mkdir("src");
+    mkdir("src/client");
+    mkdir("src/server");
+    mkdir("src/shared");
 
     // CREATE RUNTIME FILES
 
-    std::ofstream runtime("./out/runtimes/runtime.lua");
+    std::ofstream runtime("./out/runtimes/runtime.server.lua");
     // Write to the file
-    while (getline (runtimefile_lua1, runtimeText)) {
-    // Output the text from the file
-        runtime << runtimeText;
-    }
+    runtime << lua_runtime;
     // Close the file
     runtime.close();
 }
 
 void CommandHandler::build() {
     // convert all the c/cpp files to luau
+
+    // make a for loop to loop through all the files and figure out where they should go
 }
 
 void CommandHandler::watch() {

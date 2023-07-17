@@ -2,8 +2,6 @@
 
 ### Cpp to roblox luau conversion
 
-( I AM CURRENTLY TRYING TO MAKE IT SO THAT YOU CAN USE IT WITH ROJO )
-
 ## Initialize
 
 ### Download the rblxcpp.exe file and copy it to your games repo.
@@ -44,6 +42,7 @@ or
 
 ## Coverting to roblox
 
-### Right now you have to open the converted luau code and paste it into your roblox script.
-
-### Im currently making it rojo compatable
+### Install [Rojo.](https://rojo.space/docs/v7/getting-started/installation/) after initializing run:
+```
+rojo serve
+```
