@@ -7,6 +7,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
+#include <algorithm> // For std::transform
+#include <sstream>   // For std::stringstream
 #include "include/filesystem.hpp"
 #include "include/handle.hpp"
 
@@ -102,40 +104,40 @@ void CommandHandler::init() {
 	create_file("./out/runtimes/runtime.server.lua", lua_runtime);
 }
 
-std::string replaceSubstring(const std::string& original, const std::string& oldSubstr, const std::string& newSubstr) {
-    std::string result = original;
-    size_t pos = result.find(oldSubstr);
-    if (pos != std::string::npos) {
-        result.replace(pos, oldSubstr.length(), newSubstr);
+std::string convertPath(const ghc::filesystem::path& input) {
+    std::string output = input.string();
+
+    // Convert all directory separators to forward slashes
+    std::replace(output.begin(), output.end(), '\\', '/');
+
+    // Replace ".\\src\\" with "./out/"
+    size_t startPos = output.find("./src/");
+    if (startPos != std::string::npos) {
+        output.replace(startPos, 6, "./out/");
     }
-    return result;
+
+    return output;
 }
 
 
-void traverseDirectory(const fs::path& srcPath, const fs::path& outPath) {
-    for (const auto& entry : fs::directory_iterator(srcPath)) {
-        const fs::path& entryPath = entry.path();
-        const fs::path relativePath = fs::relative(entryPath, srcPath);
-
-        if (fs::is_directory(entry)) {
-            // Recursively create the directory in the output path
-            fs::create_directory(outPath / relativePath);
-
-            // Continue traversing the subdirectory
-            traverseDirectory(entryPath, outPath);
-        } else if (fs::is_regular_file(entry)) {
-            // Copy the file to the output path
-            fs::copy(entryPath, outPath / relativePath);
-        }
-        // You can also check for other file types using is_symlink(), is_socket(), etc.
-    }
-}
 
 void CommandHandler::build() {
     // convert all the c/cpp files to luau
 
     // make a for loop to loop through all the files and figure out where they should go
-	traverseDirectory("./src/", "./out/");
+    for (const auto& entry : fs::recursive_directory_iterator("./")) {
+        if (fs::is_directory(entry)) {
+            // If it's a directory, you can perform some action or simply skip it.
+            // For this example, I'll print the directory path.
+            // std::cout << "Directory: " << std::string::t << std::endl;
+			std::string outputPath = convertPath(entry.path());
+            ghc::filesystem::create_directories(outputPath);
+        } else if (fs::is_regular_file(entry)) {
+            // Process regular files here (e.g., print the file path)
+            std::cout << "File: " << entry.path() << std::endl;
+        }
+        // You can also check for other file types using is_symlink(), is_socket(), etc.
+    }
 }
 
 void CommandHandler::watch() {
