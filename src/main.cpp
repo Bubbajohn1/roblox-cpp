@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "include/handle.hpp"
+#include "include/language/snippets.hpp"
 
 int cmpStrings(char* a[], const char* b, const char* c) {
     if(strcmp(a[1], b) == 0 || strcmp(a[1], c) == 0) {
@@ -10,7 +11,7 @@ int cmpStrings(char* a[], const char* b, const char* c) {
     }
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {    
     if (argc >= 2) {
         if(cmpStrings(argv, "-w", "-watch") == 0) {
             CommandHandler::watch();

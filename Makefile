@@ -3,4 +3,4 @@ compiler = g++
 src_files = $(wildcard ./src/**.*.cpp ./src/*.cpp)
 
 all:
-	$(compiler) -std=c++11 $(src_files) -o ./build/$(exe_name).exe
+	$(compiler) -std=c++17 -O2 -Wall -Wextra $(src_files) -o ./build/$(exe_name).exe 
