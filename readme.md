@@ -40,7 +40,7 @@ or
 ./rblxcpp.exe -watch
 ```
 
-## Converting
+## Syncing to Roblox 
 
 ### Install [Rojo.](https://rojo.space/docs/v7/getting-started/installation/) after initializing run:
 ```
