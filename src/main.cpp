@@ -3,6 +3,7 @@
 #include "include/handle.hpp"
 #include "include/language/snippets.hpp"
 
+
 int cmpStrings(char* a[], const char* b, const char* c) {
     if(strcmp(a[1], b) == 0 || strcmp(a[1], c) == 0) {
         return 0;
@@ -24,6 +25,8 @@ int main(int argc, char* argv[]) {
         if(cmpStrings(argv, "--init", "--initalize") == 0) {
             CommandHandler::init();
         }
+
+        test_classcode();
     } else {
         printf("Usage: rblxcpp.exe -command \n --init / --initalize \n -w / -watch \n -b / -build");
     }

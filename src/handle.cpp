@@ -16,8 +16,8 @@
 namespace fs = ghc::filesystem;
 
 
-template <typename T>
-void create_file(T path, T content) {
+template <typename T, typename T2>
+void create_file(T path, T2 content) {
 	std::ofstream file(path);
     // Write to the file
     file << content;
@@ -43,7 +43,7 @@ T readfile(T path) {
 void CommandHandler::init() {
     // creates the rojo project file and folders that are needed.
 
-	create_file<const char*>("default.project.json", default_config);
+	create_file<const char*, const char*>("default.project.json", default_config);
 
     // create the basic dirs. these cant be changed or removed.
 	mkdir("runtimes");
@@ -60,7 +60,7 @@ void CommandHandler::init() {
 
     // CREATE RUNTIME FILES
 
-	create_file<const char*>("./runtimes/runtime.server.lua", lua_runtime);
+	create_file<const char*, const char*>("./runtimes/runtime.server.lua", lua_runtime);
 
 	std::cout << "[*] project initalized succesfully" << std::endl;
 }
@@ -108,7 +108,7 @@ void CommandHandler::build() {
             ghc::filesystem::create_directories(outputPath);
         } else if (fs::is_regular_file(entry)) {
             // Process regular files here
-            create_file<std::string>(convertPath(entry.path()), readfile<std::string>(formatPath(entry.path())));
+            create_file<std::string, std::string>(convertPath(entry.path()), readfile<std::string>(formatPath(entry.path())));
         }
         // You can also check for other file types using is_symlink(), is_socket(), etc.
     }
