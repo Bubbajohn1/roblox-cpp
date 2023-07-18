@@ -2,6 +2,8 @@
 
 ### Cpp to roblox luau conversion
 
+Join the [Discord.](https://discord.gg/z5eJyJYRs4)
+
 ## Initialize
 
 ### Download the rblxcpp.exe file and copy it to your games repo.

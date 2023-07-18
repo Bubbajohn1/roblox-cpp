@@ -1,7 +1,9 @@
 #include <string>
 
 typedef struct constructor {
+    struct values {
 
+    } values;
 } constructor;
 
 const char* newclass(const char* name, ...) {
