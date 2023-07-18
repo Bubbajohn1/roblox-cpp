@@ -17,7 +17,7 @@ namespace fs = ghc::filesystem;
 
 
 template <typename T>
-T create_file(T path, T content) {
+void create_file(T path, T content) {
 	std::ofstream file(path);
     // Write to the file
     file << content;

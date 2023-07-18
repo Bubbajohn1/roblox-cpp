@@ -37,3 +37,5 @@
 
 make
 COPY .\build\rblxcpp.exe ..\testing
+TIMEOUT 10
+DEL .\build\rblxcpp.exe

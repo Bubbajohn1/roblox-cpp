@@ -1,6 +1,6 @@
 const char* default_config = R"(
 {
-	"name": "roblox-cpp-game",
+	"name": "roblox-rblx++-game",
 	"globIgnorePaths": [
 		"**/package.json",
 		"**/tsconfig.json"
@@ -9,16 +9,16 @@ const char* default_config = R"(
 		"$className": "DataModel",
 		"ServerScriptService": {
 			"$className": "ServerScriptService",
-			"cpp": {
+			"rblx++": {
 				"$path": "out/server"
 			}
 		},
 		"ReplicatedStorage": {
 			"$className": "ReplicatedStorage",
-			"cpp_include": {
+			"rblx++_include": {
 				"$path": "runtimes/"
 			},
-			"cpp": {
+			"rblx++": {
 				"$path": "out/shared"
 			}
 		},
@@ -26,7 +26,7 @@ const char* default_config = R"(
 			"$className": "StarterPlayer",
 			"StarterPlayerScripts": {
 				"$className": "StarterPlayerScripts",
-				"cpp": {
+				"rblx++": {
 					"$path": "out/client"
 				}
 			}

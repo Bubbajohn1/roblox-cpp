@@ -1,6 +1,10 @@
 #include <string>
 
-const char* newclass(const char* name) {
+typedef struct constructor {
+
+} constructor;
+
+const char* newclass(const char* name, ...) {
     std::string class_code = std::string("local ") + name + " = {}" + R"(
         
     )";
