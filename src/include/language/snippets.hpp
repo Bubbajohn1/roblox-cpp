@@ -75,7 +75,7 @@ std::string newenum(const char* name, const std::vector<Value>& values) {
     final_code << "    " << newvar(std::vector<Value> {
         {std::string("_inverse"), "{}"}
     });
-    final_code << "\n    " << name << " = setmetatable({}, {\n        __index = _inverse,\n    })\n";
+    final_code << "    " << name << " = setmetatable({}, {\n        __index = _inverse,\n    })\n\n";
     
     int interation = 0;
     for (const auto& value : values) {
@@ -86,7 +86,7 @@ std::string newenum(const char* name, const std::vector<Value>& values) {
     }
 
 
-    final_code << "\n\nend";
+    final_code << "\nend";
 
     return final_code.str();
 }
