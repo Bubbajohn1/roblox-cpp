@@ -23,6 +23,7 @@ void findAndPrintKeywords(const std::string& code) {
             word.push_back(ch);
         } else {
             if (!word.empty() && isCppKeyword(word)) {
+                // use snippets.hpp to generate lua code based on the cpp keywords.
                 std::cout << "Found C++ keyword: " << word << std::endl;
             }
             word.clear();

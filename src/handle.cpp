@@ -178,9 +178,8 @@ void CommandHandler::build() {
         } else if (fs::is_regular_file(entry)) {
             // Process regular files here
             create_file<std::string, std::string>(convertPath(entry.path()), readfile<std::string>(formatPath(entry.path())));
-            compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path())));
+            compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path()))); // replace ^ with this line
         }
-        // You can also check for other file types using is_symlink(), is_socket(), etc.
     }
 
 	for (const auto& entry : fs::recursive_directory_iterator("./src/")) {
