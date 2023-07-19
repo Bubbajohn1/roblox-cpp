@@ -12,9 +12,9 @@
 #include "include/filesystem.hpp"
 #include "include/handle.hpp"
 #include "include/files.hpp"
+#include "include/language/compile.hpp"
 
 namespace fs = ghc::filesystem;
-
 
 template <typename T, typename T2>
 void create_file(T path, T2 content) {
@@ -34,17 +34,54 @@ void test_create_file(const char* path, const char* content) {
 }
 
 template <typename T>
-T readfile(T path) {
-	std::string content;
+std::string readfile(T path) {
+    std::string content;
     std::ifstream file(path);
 
-    while (getline (file, content)) {
-        // Output the text from the file
+    if (!file) {
+        std::cerr << "Error opening file: " << path << std::endl;
+        return "";
     }
+
+    // Use a stringstream to efficiently append each line to the content string
+    std::stringstream buffer;
+    buffer << file.rdbuf();
+    content = buffer.str();
 
     file.close();
 
     return content;
+}
+
+
+std::string convertPath(const ghc::filesystem::path& input) {
+    std::string output = input.string();
+
+    // Convert all directory separators to forward slashes
+    std::replace(output.begin(), output.end(), '\\', '/');
+
+    // Replace ".\\src\\" with "./out/"
+    size_t startPos = output.find("./src/");
+    if (startPos != std::string::npos) {
+        output.replace(startPos, 6, "./out/");
+    }
+
+    return output;
+}
+
+std::string formatPath(const ghc::filesystem::path& input) {
+    std::string output = input.string();
+
+    // Convert all directory separators to forward slashes
+    std::replace(output.begin(), output.end(), '\\', '/');
+
+    // Replace ".\\src\\" with "./out/"
+    size_t startPos = output.find("./src/");
+    if (startPos != std::string::npos) {
+        output.replace(startPos, 6, "./src/");
+    }
+
+    return output;
 }
 
 
@@ -127,36 +164,6 @@ void CommandHandler::init() {
 	std::cout << "[*] project initalized succesfully" << std::endl;
 }
 
-std::string convertPath(const ghc::filesystem::path& input) {
-    std::string output = input.string();
-
-    // Convert all directory separators to forward slashes
-    std::replace(output.begin(), output.end(), '\\', '/');
-
-    // Replace ".\\src\\" with "./out/"
-    size_t startPos = output.find("./src/");
-    if (startPos != std::string::npos) {
-        output.replace(startPos, 6, "./out/");
-    }
-
-    return output;
-}
-
-std::string formatPath(const ghc::filesystem::path& input) {
-    std::string output = input.string();
-
-    // Convert all directory separators to forward slashes
-    std::replace(output.begin(), output.end(), '\\', '/');
-
-    // Replace ".\\src\\" with "./out/"
-    size_t startPos = output.find("./src/");
-    if (startPos != std::string::npos) {
-        output.replace(startPos, 6, "./src/");
-    }
-
-    return output;
-}
-
 
 
 void CommandHandler::build() {
@@ -171,6 +178,7 @@ void CommandHandler::build() {
         } else if (fs::is_regular_file(entry)) {
             // Process regular files here
             create_file<std::string, std::string>(convertPath(entry.path()), readfile<std::string>(formatPath(entry.path())));
+            compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path())));
         }
         // You can also check for other file types using is_symlink(), is_socket(), etc.
     }
