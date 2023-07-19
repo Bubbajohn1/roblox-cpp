@@ -25,6 +25,14 @@ void create_file(T path, T2 content) {
     file.close();
 }
 
+void test_create_file(const char* path, const char* content) {
+	std::ofstream file(path);
+    // Write to the file
+    file << content;
+    // Close the file
+    file.close();
+}
+
 template <typename T>
 T readfile(T path) {
 	std::string content;
@@ -43,7 +51,61 @@ T readfile(T path) {
 void CommandHandler::init() {
     // creates the rojo project file and folders that are needed.
 
-	create_file<const char*, const char*>("default.project.json", default_config);
+	test_create_file("default.project.json", R"(
+    {
+        "name": "roblox-rblx++-game",
+        "globIgnorePaths": [
+            "**/package.json",
+            "**/tsconfig.json"
+        ],
+        "tree": {
+            "$className": "DataModel",
+            "ServerScriptService": {
+                "$className": "ServerScriptService",
+                "rblx++": {
+                    "$path": "out/server"
+                }
+            },
+            "ReplicatedStorage": {
+                "$className": "ReplicatedStorage",
+                "rblx++_include": {
+                    "$path": "runtimes/"
+                },
+                "rblx++": {
+                    "$path": "out/shared"
+                }
+            },
+            "StarterPlayer": {
+                "$className": "StarterPlayer",
+                "StarterPlayerScripts": {
+                    "$className": "StarterPlayerScripts",
+                    "rblx++": {
+                        "$path": "out/client"
+                    }
+                }
+            },
+            "Workspace": {
+                "$className": "Workspace",
+                "$properties": {
+                    "FilteringEnabled": true
+                }
+            },
+            "HttpService": {
+                "$className": "HttpService",
+                "$properties": {
+                    "HttpEnabled": true
+                }
+            },
+            "SoundService": {
+                "$className": "SoundService",
+                "$properties": {
+                    "RespectFilteringEnabled": true
+                }
+            }
+        }
+    }
+
+    )");
 
     // create the basic dirs. these cant be changed or removed.
 	mkdir("runtimes");

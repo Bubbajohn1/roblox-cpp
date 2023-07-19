@@ -4,9 +4,9 @@
 
 EXAMPLE CLASS IN LUA
 
-function TestClass.new(Value)
+function TestClass.new()
     --Create the base object.
-    local Object = {Value = Value}
+    local Object = {Value = 2}
     setmetatable(Object,TestClass)
     TestClass.__index = TestClass
 
@@ -19,7 +19,7 @@ function TestClass:GetValue()
 end
 
 --Create an instance of the class.
-local TestObject = TestClass.new(2)
+local TestObject = TestClass.new()
 print(TestObject:GetValue()) --2
 
 ]]

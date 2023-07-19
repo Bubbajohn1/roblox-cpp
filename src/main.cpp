@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
             CommandHandler::init();
         }
 
-        test_classcode();
+        // test_classcode();
     } else {
         printf("Usage: rblxcpp.exe -command \n --init / --initalize \n -w / -watch \n -b / -build");
     }
