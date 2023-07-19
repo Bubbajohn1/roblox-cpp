@@ -198,3 +198,12 @@ void CommandHandler::build() {
 void CommandHandler::watch() {
     // if a files contents change then update the converted luau file
 }
+
+void CommandHandler::test() {
+    for (const auto& entry : fs::recursive_directory_iterator("./")) {
+        if (fs::is_regular_file(entry)) {
+            // Process regular files here
+            compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path()))); // replace ^ with this line
+        }
+    }
+}

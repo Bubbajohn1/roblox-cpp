@@ -26,6 +26,10 @@ int main(int argc, char* argv[]) {
             CommandHandler::init();
         }
 
+        if(cmpStrings(argv, "-t", "-test") == 0) {
+            CommandHandler::test();
+        }
+
         test_classcode();
     } else {
         printf("Usage: rblxcpp.exe -command \n --init / --initalize \n -w / -watch \n -b / -build");

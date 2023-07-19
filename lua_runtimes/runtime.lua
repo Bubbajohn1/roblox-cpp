@@ -75,7 +75,7 @@ function RPP.Include(includePath)
 
 end
 
-function RPP.MakeEnum()
+function RPP.MakeEnum(name)
     
 end
 
