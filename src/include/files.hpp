@@ -132,9 +132,5 @@ function RPP.Include(includePath)
 
 end
 
-function RPP.MakeEnum(name)
-    
-end
-
 return RPP
 )";

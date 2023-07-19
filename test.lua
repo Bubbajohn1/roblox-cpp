@@ -1,5 +1,9 @@
---[[
-    cpp:
 
-    define test 100
-]]
+local RPP = {}
+
+function RPP.Include(includePath)
+
+end
+
+
+return RPP

@@ -12,7 +12,8 @@
 #include "include/filesystem.hpp"
 #include "include/handle.hpp"
 #include "include/files.hpp"
-#include "include/language/compile.hpp"
+#include "include/language/snippets.hpp"
+#include "include/language/compiler.hpp"
 
 namespace fs = ghc::filesystem;
 
@@ -206,4 +207,6 @@ void CommandHandler::test() {
             compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path()))); // replace ^ with this line
         }
     }
+
+    test_code();
 }

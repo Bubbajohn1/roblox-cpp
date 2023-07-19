@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "include/handle.hpp"
-#include "include/language/snippets.hpp"
 
 
 int cmpStrings(char* a[], const char* b, const char* c) {
@@ -29,8 +28,6 @@ int main(int argc, char* argv[]) {
         if(cmpStrings(argv, "-t", "-test") == 0) {
             CommandHandler::test();
         }
-
-        test_classcode();
     } else {
         printf("Usage: rblxcpp.exe -command \n --init / --initalize \n -w / -watch \n -b / -build");
     }
