@@ -2,7 +2,7 @@
 
 ### Cpp to roblox luau conversion
 
-Join the [Discord.](https://discord.gg/z5eJyJYRs4)
+### Join the [Discord.](https://discord.gg/z5eJyJYRs4)
 
 ## Initialize
 
