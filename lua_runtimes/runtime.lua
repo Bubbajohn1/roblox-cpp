@@ -68,3 +68,11 @@ function test:setVal(newVal)
 end
 
 ]]
+
+local RPP = {}
+
+function RPP.Include(includePath)
+
+end
+
+return RPP

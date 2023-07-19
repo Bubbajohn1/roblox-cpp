@@ -60,7 +60,7 @@ void CommandHandler::init() {
 
     // CREATE RUNTIME FILES
 
-	create_file<const char*, const char*>("./runtimes/runtime.server.lua", lua_runtime);
+	create_file<const char*, const char*>("./runtimes/runtime.lua", lua_runtime);
 
 	std::cout << "[*] project initalized succesfully" << std::endl;
 }

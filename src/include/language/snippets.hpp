@@ -8,28 +8,30 @@ struct Value {
     std::string value;
 };
 
-struct Functions {}; // Replace 'struct functions' with 'struct Functions'
+struct Function {
+    std::string name;
+    std::string cb;
+};
 
-std::string newclass(const char* name, const std::vector<Value>& values, const Functions& functions) {
+std::string generate_function(const std::string& class_name, const Function& func) {
+    std::ostringstream function_code;
+    function_code << "function " << class_name << ":" << func.name << "()\n";
+    function_code << "    " << func.cb << "\n";
+    function_code << "end\n\n";
+    return function_code.str();
+}
+
+std::string newclass(const char* name, const std::vector<Value>& values, const std::vector<Function>& functions) {
     std::ostringstream class_code;
-    class_code << "local " << name << " = {};\n";
-    class_code << "function " << name << ".new()\n";
-    class_code << "    local Object = {";
+    class_code << "local " << name << " = {}\n\n";
 
-    for (size_t i = 0; i < values.size(); ++i) {
-        const Value& value = values[i];
-        class_code << value.name << " = " << value.value;
-
-        if (i < values.size() - 1) {
-            class_code << ", ";
-        }
+    for (const auto& value : values) {
+        class_code << name << "." << value.name << " = " << value.value << "\n";
     }
 
-    class_code << "}\n";
-    class_code << "    setmetatable(Object, " << name << ")\n";
-    class_code << "    " << name << ".__index = " << name << "\n";
-    class_code << "    return Object\n";
-    class_code << "end";
+    for (const auto& func : functions) {
+        class_code << generate_function(name, func);
+    }
 
     // Convert std::ostringstream to std::string and return it.
     return class_code.str();
@@ -41,9 +43,12 @@ std::vector<Value> values = {
     {"test2", "2"}
 };
 
-std::string testing = newclass("testing", values, {
+std::vector<Function> functions = {
+    {"setTest", "self.test = 10"},
+    {"getTest", "return self.test"},
+};
 
-});
+std::string testing = newclass("testing", values, functions); // place this inside the parser or compiler so when you make a cpp class it converts into a custom lua class.
 
 void test_classcode() {
     printf("%s", testing.c_str());
