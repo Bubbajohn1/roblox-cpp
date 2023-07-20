@@ -87,13 +87,13 @@ std::string compile_file(const char* filePath, std::string fileContents) {
 
         while (iss >> token) {
             if (isCppKeyword(token)) {
-                std::cout << token << " is a C++ keyword." << std::endl;
+                // std::cout << token << " is a C++ keyword." << std::endl;
             } else if (isValidIdentifier(token)) {
                 if (isFunction(fileContents, token)) {
-                    std::cout << token << " is a function name." << std::endl;
+                    // std::cout << token << " is a function name." << std::endl;
                     std::string params = extractFunctionParams(fileContents, token);
                     if (!params.empty()) {
-                        std::cout << "Function Parameters: " << params << std::endl;
+                        // std::cout << "Function Parameters: " << params << std::endl;
                     }
                 } else {
                     std::string value = extractVariableValue(fileContents, token);
@@ -102,7 +102,7 @@ std::string compile_file(const char* filePath, std::string fileContents) {
                     }
                 }
             } else {
-                std::cout << token << " is not a valid identifier" << std::endl;
+                // std::cout << token << " is not a valid identifier" << std::endl;
             }
         }
     }

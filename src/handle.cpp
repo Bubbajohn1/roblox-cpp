@@ -75,6 +75,21 @@ std::string convertPath(const ghc::filesystem::path& input) {
     return output;
 }
 
+std::string convertPathFolder(const ghc::filesystem::path& input) {
+    std::string output = input.string();
+
+    // Convert all directory separators to forward slashes
+    std::replace(output.begin(), output.end(), '\\', '/');
+
+    // Replace ".\\src\\" with "./out/"
+    size_t startPos = output.find("./src/");
+    if (startPos != std::string::npos) {
+        output.replace(startPos, 6, "./out/");
+    }
+
+    return output;
+}
+
 std::string formatPath(const ghc::filesystem::path& input) {
     std::string output = input.string();
 
@@ -179,7 +194,7 @@ void CommandHandler::build() {
     for (const auto& entry : fs::recursive_directory_iterator("./")) {
         if (fs::is_directory(entry)) {
             // If it's a directory, create a folder inside out that corrispponds to it
-			std::string outputPath = convertPath(entry.path());
+			std::string outputPath = convertPathFolder(entry.path());
             ghc::filesystem::create_directories(outputPath);
         } else if (fs::is_regular_file(entry)) {
             // Process regular files here
