@@ -12,7 +12,6 @@
 #include "include/filesystem.hpp"
 #include "include/handle.hpp"
 #include "include/files.hpp"
-#include "include/language/snippets.hpp"
 #include "include/language/compiler.hpp"
 
 namespace fs = ghc::filesystem;
@@ -65,6 +64,12 @@ std::string convertPath(const ghc::filesystem::path& input) {
     size_t startPos = output.find("./src/");
     if (startPos != std::string::npos) {
         output.replace(startPos, 6, "./out/");
+    }
+
+    // Change the file extension to .lua
+    size_t extPos = output.find_last_of(".");
+    if (extPos != std::string::npos) {
+        output.replace(extPos, std::string::npos, ".lua");
     }
 
     return output;
@@ -178,17 +183,13 @@ void CommandHandler::build() {
             ghc::filesystem::create_directories(outputPath);
         } else if (fs::is_regular_file(entry)) {
             // Process regular files here
-            create_file<std::string, std::string>(convertPath(entry.path()), readfile<std::string>(formatPath(entry.path())));
-            compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path()))); // replace ^ with this line
+            create_file<std::string, std::string>(convertPath(entry.path()), compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path()))));
+            // replace ^ with this line
         }
     }
 
 	for (const auto& entry : fs::recursive_directory_iterator("./src/")) {
-        if (fs::is_directory(entry)) {
-            // If it's a directory, you can perform some action or simply skip it.
-            // For this example, I'll print the directory path.
-            std::cout << "[+] Folder: " << convertPath(entry.path()) << std::endl;
-        } else if (fs::is_regular_file(entry)) {
+        if (fs::is_regular_file(entry)) {
             // Process regular files here (e.g., print the file path)
             std::cout << "[+] File: " << convertPath(entry.path()) << std::endl;
         }
@@ -204,7 +205,7 @@ void CommandHandler::test() {
     for (const auto& entry : fs::recursive_directory_iterator("./")) {
         if (fs::is_regular_file(entry)) {
             // Process regular files here
-            compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path()))); // replace ^ with this line
+
         }
     }
 
