@@ -39,7 +39,13 @@ std::string newvar(const std::vector<Value>& values) {
     
     return final_code.str();
 }
+std::string newprint(std::string message) {
+    std::ostringstream final_code;
 
+    final_code << "print('" << message << "')";
+    
+    return final_code.str();
+}
 // use the newvar and newfunction helpers to make more stuff
 std::string newclass(const char* name, const std::vector<Value>& values, const std::vector<Function>& functions) {
     std::ostringstream final_code;
@@ -91,32 +97,32 @@ std::string newenum(const char* name, const std::vector<Value>& values) {
     return final_code.str();
 }
 
-std::string class_code = newclass("testing", std::vector<Value> {
-    {"test", "10"},
-    {"test2", "2"},
-}, std::vector<Function> {
-    {"setTest", "val", "self.test = val"},
-    {"getTest", "", "return self.test"},
-});
-std::string function_code = newfunction(std::vector<Function> {
-    {"test", "", "print('hello world')"},
-});
-std::string var_code = newvar(std::vector<Value> {
-    {"testing1234", "'test'"}
-});
-
-std::string enum_code = newenum("testing", std::vector<Value> {
-    {"test", "1"},
-    {"test2", "2"},
-});
-
-std::string f_code = class_code + function_code + var_code + enum_code; // repelace this later with some function to see what should go first.
-
 #ifndef SNIPPETS_HPP
 #define SNIPPETS_HPP
 
 // Function declaration (prototype)
 void test_code() {
+    std::string class_code = newclass("testing", std::vector<Value> {
+        {"test", "10"},
+        {"test2", "2"},
+    }, std::vector<Function> {
+        {"setTest", "val", "self.test = val"},
+        {"getTest", "", "return self.test"},
+    });
+    std::string function_code = newfunction(std::vector<Function> {
+        {"test", "", "print('hello world')"},
+    });
+    std::string var_code = newvar(std::vector<Value> {
+        {"testing1234", "'test'"}
+    });
+
+    std::string enum_code = newenum("testing", std::vector<Value> {
+        {"test", "1"},
+        {"test2", "2"},
+    });
+
+    std::string f_code = class_code + function_code + var_code + enum_code; // repelace this later with some function to see what should go first.
+
     printf("%s", f_code.c_str());
 }
 

@@ -193,17 +193,29 @@ void CommandHandler::build() {
     // make a for loop to loop through all the files and figure out where they should go
     for (const auto& entry : fs::recursive_directory_iterator("./")) {
         if (fs::is_directory(entry)) {
-            // If it's a directory, create a folder inside out that corrispponds to it
-			std::string outputPath = convertPathFolder(entry.path());
+            // If it's a directory, create a folder inside out that corresponds to it
+            std::string outputPath = convertPathFolder(entry.path());
             ghc::filesystem::create_directories(outputPath);
         } else if (fs::is_regular_file(entry)) {
             // Process regular files here
-            create_file<std::string, std::string>(convertPath(entry.path()), compile_file(formatPath(entry.path()).c_str(), readfile<std::string>(formatPath(entry.path()))));
-            // replace ^ with this line
+            std::string inputFilePath = formatPath(entry.path());
+            std::string outputFilePath = convertPath(entry.path());
+
+            // Check if the file extension is ".exe" and skip it if it is
+            if (fs::path(inputFilePath).extension() == ".exe") {
+                continue;
+            }
+
+            if (fs::path(inputFilePath).extension() == ".json") {
+                continue;
+            }
+
+
+            create_file<std::string, std::string>(outputFilePath, compile_file(inputFilePath.c_str(), readfile<std::string>(inputFilePath)));
         }
     }
 
-	for (const auto& entry : fs::recursive_directory_iterator("./src/")) {
+    for (const auto& entry : fs::recursive_directory_iterator("./src/")) {
         if (fs::is_regular_file(entry)) {
             // Process regular files here (e.g., print the file path)
             std::cout << "[+] File: " << convertPath(entry.path()) << std::endl;
