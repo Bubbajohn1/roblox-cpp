@@ -1,3 +1,5 @@
+#pragma once
+
 const char* default_config = R"(
 {
 	"name": "roblox-rblx++-game",

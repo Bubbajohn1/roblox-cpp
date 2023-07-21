@@ -1,3 +1,5 @@
+#pragma once
+
 class CommandHandler {
 public:
     static void watch();
