@@ -42,7 +42,6 @@
 // #endif
 //
 //---------------------------------------------------------------------------------------
-#pragma once
 #ifndef GHC_FILESYSTEM_H
 #define GHC_FILESYSTEM_H
 

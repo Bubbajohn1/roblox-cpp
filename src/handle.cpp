@@ -12,8 +12,7 @@
 #include "include/filesystem.hpp"
 #include "include/handle.hpp"
 #include "include/files.hpp"
-#include "include/language/lexer.hpp"
-#include "include/language/snippets.hpp"
+#include "include/language/compiler.hpp"
 
 namespace fs = ghc::filesystem;
 

@@ -1,5 +1,3 @@
-#pragma once
-
 #include <string>
 #include <iostream>
 #include <vector> // For storing multiple Value objects
